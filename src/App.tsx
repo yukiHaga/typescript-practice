@@ -1,8 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import { getNum } from './functions/practice3';
 
 const App = () => {
 
+  getNum();
   return (
     <div className="App">
       <header className="App-header">
