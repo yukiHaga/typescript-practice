@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { getNum } from './functions/practice3';
 import { map, is } from './functions/practice4';
+import { ask, parse, date } from './functions/practice7';
 
 const App = () => {
 
@@ -18,6 +19,16 @@ const App = () => {
   console.log(is(42, 42)); // => true
   // Argument of type 'string' is not assignable to parameter of type 'number'.
   // console.log(is(10, 'foo')); // => is(a: number, b: number): boolean
+
+  console.log('エラー処理');
+
+  // toISOString()メソッドは、YYYY-MM-DDTHH:mm:ss.sssZの形式の、 ISOフォーマット(ISO 8601拡張フォーマット)の文字列を返します。
+  // console.infoは、コンソールに情報のアイコンが追加されるだけ。Chromeだとそのアイコンが表示されないので、console.logと同じである。
+  if (date) {
+    console.info('Date is', date.toISOString());
+  } else {
+    console.error('Error parsing date for some reason');
+  }
 
   return (
     <div className="App">
