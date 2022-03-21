@@ -35,7 +35,11 @@ export function parse1(birthday: string): Date | null {
 }
 
 // 与えられた日付が有効かどうかチェックします
+// callメソッドは、暗黙的に渡されるthisの値を明示的にして、関数を呼び出すことができる。this以外に引数も関数に渡すことができる。
+// dateの値をthisの値として、Object.prototype.toStringを呼び出している。
 function isValid(date: Date) {
   return Object.prototype.toString.call(date) === '[object Date]' && !Number.isNaN(date.getTime());
 };
+
+
 
