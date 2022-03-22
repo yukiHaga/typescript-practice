@@ -20,16 +20,26 @@ export function parse(birthday: string): Date {
   return new Date(birthday);
 }
 
-export let date = parse1(ask() as string);
+// カスタムエラー型
+// TypeScriptでは、クラスを定義すると、型も定義される
+// クラス内にコンストラクタを省略しても、自動的に空のコンストラクタが作成される
+export class InvalidDateFormatError extends RangeError {};
+export class DateIsInTheFutureError extends RangeError {};
 
 // parseの改良版
-// ユーザーが入力した日付を検証する必要があるでしょう
-// nullを返すのは、型安全な方法でエラーを処理するための最も軽量な方法です
-// しかし、nullを返すだけだと、具体的なエラーメッセージが返されないので、デバッグの情報としては物足りない
-export function parse1(birthday: string): Date | null {
+// throw文を使うとユーザーが例外を投げることができます。 例外として投げられたオブジェクトは、catch節で関数の引数のようにアクセスできます。
+// throw文ではエラーオブジェクトを例外として投げることができます。
+// RangeErrorは指定された値が許容範囲を超えていることを表す
+export function parse1(birthday: string): Date {
   let date = new Date(birthday);
+  // isValidで与えられた値がnullかどうかチェックする
+  // RangeErrorコンストラクターは、インスタンスを生成します
+  // 第一引数には、人間が読むためのエラーの説明が入る
   if (!isValid(date)) {
-    return null;
+    throw new InvalidDateFormatError('Enter a date in the form YYY/MM/DD')
+  }
+  if (date.getTime() > Date.now()) {
+    throw new DateIsInTheFutureError('Are you a timelord?');
   }
   return date;
 }
@@ -40,6 +50,7 @@ export function parse1(birthday: string): Date | null {
 function isValid(date: Date) {
   return Object.prototype.toString.call(date) === '[object Date]' && !Number.isNaN(date.getTime());
 };
+
 
 
 
